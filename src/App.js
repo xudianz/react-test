@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-// import Header from './components/Header'
 // import LeftNav from './components/LeftNav'
 import menuList from './config/menuConfig'
 import { NavLink } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import './App.css';
+// import Header from './components/Header'
 
 import { connect } from 'react-redux'
 import { changeIndex } from './redux/action'
 
 
 const { SubMenu } = Menu;
-const { Header, Sider, Content } = Layout;
+const { Sider, Content, Header } = Layout;
 
 
 class App extends Component {
@@ -23,20 +23,19 @@ class App extends Component {
   }
 
   componentWillMount () {
+    let pathname = this.props.location.pathname
     let index
-    let path = this.props.match.path
-    if (path === '/first') {
+    if (pathname.includes('/first')) {
       index = 0
-    } else if (path === '/second') {
+    } else if (pathname === '/second') {
       index = 1
-    } else if (path === '/third') {
+    } else if (pathname === '/third') {
       index = 2
     }
     const menuTreeNode = this.renderMenu(menuList[index].menu)
-    const defaultSelectedKeys = this.props.location.pathname
     this.setState({
       menuTreeNode,
-      defaultSelectedKeys
+      defaultSelectedKeys: pathname
     })
     console.log(this.props)
   }
@@ -90,6 +89,7 @@ class App extends Component {
           }
           </Menu>
         </Header>
+        {/* <Header /> */}
         <Layout>
           <Sider width={200} style={{ background: '#fff' }}>
             <Menu
@@ -105,7 +105,7 @@ class App extends Component {
             <Content className="content">
               {this.props.children}
             </Content>
-          </Layout>
+          </Layout>       
         </Layout>
       </Layout>
     );

@@ -1,7 +1,7 @@
 const menuList = [
   {
     topTitle: '标题一',
-    key: '/first/home',
+    key: '/first',
     menu: [
       {
         title: '首页',
@@ -47,7 +47,7 @@ const menuList = [
   },
   {
     topTitle: '标题二',
-    key: '/second/ui2/button',
+    key: '/second',
     menu: [
       {
         title: 'UI2',
@@ -75,7 +75,7 @@ const menuList = [
   },
   {
     topTitle: '标题三',
-    key: '/third/ui3/button',
+    key: '/third',
     menu: [
       {
         title: 'UI3',

@@ -12,28 +12,19 @@ export default class Router extends Component {
       <HashRouter>
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/first" render={({history, location, match}) =>
-            <App history={history} location={location} match={match}>
+          <Route path="/" render={({history, location, match}) =>
+            <App
+              history={history}
+              location={location}
+              match={match}
+            >
               <Switch>
-                <Route path="/first/home" component={Home} />
+                <Route exact path="/first" component={Home} />
+                <Route exact path="/first/home" component={Home3} />
                 <Route path="/first/ui/button" component={Home2} />
-                <Redirect to='/first/home' />
-              </Switch>
-            </App>
-          }/>
-          <Route path="/second" render={({history, location, match}) =>
-            <App history={history} location={location} match={match}>
-              <Switch>
-                <Route path="/second/ui2/button" component={Home2} />
-                <Redirect to='/second/ui2/button' />
-              </Switch>
-            </App>
-          }/>
-          <Route path="/third" render={({history, location, match}) =>
-            <App history={history} location={location} match={match}>
-              <Switch>
-                <Route path="/third/ui3/button" component={Home3} />
-                <Redirect to='/third/ui3/button' />
+                <Route path="/second" component={Home2} />
+                <Route path="/third" component={Home3} />
+                <Redirect to="/first" />
               </Switch>
             </App>
           }/>
