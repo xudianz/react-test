@@ -8,7 +8,7 @@ import './App.css';
 // import Header from './components/Header'
 
 import { connect } from 'react-redux'
-import { changeIndex } from './redux/action'
+// import { changeIndex } from './redux/action'
 
 
 const { SubMenu } = Menu;
@@ -19,25 +19,73 @@ class App extends Component {
 
   state = {
     menuTreeNode: [],
-    defaultSelectedKeys: ''
+    defaultSelectedKeys: '',
+    selectedKeys: '',
+    defaultOpenKeys: ''
   }
 
   componentWillMount () {
     let pathname = this.props.location.pathname
+    console.log(pathname)
     let index
-    if (pathname.includes('/first')) {
+    if (pathname.includes('/first') || pathname === '/') {
       index = 0
-    } else if (pathname === '/second') {
+      this.setState({
+        selectedKeys: '/first/ui/button',
+      })
+    } else if (pathname.includes('/second')) {
       index = 1
-    } else if (pathname === '/third') {
+      this.setState({
+        selectedKeys: '/second/ui/button'
+      })
+    } else if (pathname.includes('/third')) {
       index = 2
+      this.setState({
+        selectedKeys: '/third/ui/button'
+      })
     }
+    
+    this.getDefaultOpenKeys(pathname, index)
     const menuTreeNode = this.renderMenu(menuList[index].menu)
-    this.setState({
-      menuTreeNode,
-      defaultSelectedKeys: pathname
+    if (pathname === '/') {
+      this.setState({
+        menuTreeNode,
+        defaultSelectedKeys: '/first/ui/button',
+      })
+    } else {
+      this.setState({
+        menuTreeNode,
+        defaultSelectedKeys: pathname
+      })
+    }
+    
+  }
+
+  getDefaultOpenKeys = (pathname, index) => {
+    let openkey = ''
+    if (pathname === '/') {
+      this.setState({
+        defaultOpenKeys: '/first/ui',
+      })
+      return
+    }
+    menuList[index].menu.forEach((item, index) => {
+      if (item.children) {
+        item.children.forEach((menu, i) => {
+          if (menu.key === pathname) {
+            openkey = item.key
+          }
+        })
+      } else {
+        if (item.key === pathname) {
+          openkey = item.key
+        }
+      }
     })
-    console.log(this.props)
+    // console.log(openkey)
+    this.setState({
+      defaultOpenKeys: openkey
+    })
   }
 
   renderMenu = (menuList) => {
@@ -51,20 +99,28 @@ class App extends Component {
       }
       return (
         <Menu.Item key={item.key}>
-          <NavLink to={item.key}>{item.title}</NavLink>
+          <NavLink to={item.key} replace>{item.title}</NavLink>
         </Menu.Item>
       )
     })
   }
 
-  handleClick (index) {
-    const { dispatch } = this.props
+  handleClick = ({item, key, keyPath }) => {
+    let index
+    if (key.includes('/first')) {
+      index = 0
+    } else if (key.includes('/second')) {
+      index = 1
+    } else if (key.includes('/third')) {
+      index = 2
+    }
     const menuTreeNode = this.renderMenu(menuList[index].menu)
+
     this.setState({
-      menuTreeNode
+      menuTreeNode,
+      defaultSelectedKeys: key
     })
-    dispatch(changeIndex(index))
-    // console.log(this.props.index)    
+    this.getDefaultOpenKeys(key, index)
   }
 
   render() {
@@ -75,14 +131,15 @@ class App extends Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={[this.state.defaultSelectedKeys]}
+            defaultSelectedKeys={[this.state.selectedKeys]}
             style={{ lineHeight: '64px' }}
+            onClick={this.handleClick}
           >
            {
              menuList.map((item, index) => {
               return (
-                <Menu.Item onClick={() => this.handleClick(index)} key=        {item.key}>
-                  <NavLink to={item.key}>{item.topTitle}</NavLink>
+                <Menu.Item key={item.key}>
+                  <NavLink to={item.key} replace>{item.topTitle}</NavLink>
                 </Menu.Item>
               )
             })
@@ -95,7 +152,7 @@ class App extends Component {
             <Menu
               mode="inline"
               defaultSelectedKeys={[this.state.defaultSelectedKeys]}
-              defaultOpenKeys={['sub1']}
+              defaultOpenKeys={[this.state.defaultOpenKeys]}
               style={{ height: '100%', borderRight: 0 }}
             >
               { this.state.menuTreeNode }

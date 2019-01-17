@@ -1,12 +1,12 @@
 const menuList = [
   {
     topTitle: '标题一',
-    key: '/first',
+    key: '/first/ui/button',
     menu: [
-      {
-        title: '首页',
-        key: '/first/home'
-      },
+      // {
+      //   title: '首页',
+      //   key: '/first/home'
+      // },
       {
         title: 'UI',
         key: '/first/ui',
@@ -47,23 +47,23 @@ const menuList = [
   },
   {
     topTitle: '标题二',
-    key: '/second',
+    key: '/second/ui/button',
     menu: [
       {
         title: 'UI2',
-        key: '/second/ui2',
+        key: '/second/ui',
         children: [
           {
             title: '按钮',
-            key: '/second/ui2/button'
+            key: '/second/ui/button'
           },
           {
             title: '弹框',
-            key: '/second/ui2/modals'
+            key: '/second/ui/modals'
           },
           {
             title: 'loading',
-            key: '/second/ui2/loading'
+            key: '/second/ui/loading'
           }
         ]
       },
@@ -75,23 +75,23 @@ const menuList = [
   },
   {
     topTitle: '标题三',
-    key: '/third',
+    key: '/third/ui/button',
     menu: [
       {
         title: 'UI3',
-        key: '/third/ui3',
+        key: '/third/ui',
         children: [
           {
             title: '按钮',
-            key: '/third/ui3/button'
+            key: '/third/ui/button'
           },
           {
             title: '弹框',
-            key: '/third/ui3/modals'
+            key: '/third/ui/modals'
           },
           {
             title: 'loading',
-            key: '/third/ui3/loading'
+            key: '/third/ui/loading'
           }
         ]
       },

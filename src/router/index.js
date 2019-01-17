@@ -19,12 +19,12 @@ export default class Router extends Component {
               match={match}
             >
               <Switch>
-                <Route exact path="/first" component={Home} />
-                <Route exact path="/first/home" component={Home3} />
+                {/* <Route exact path="/first/home" component={Home} /> */}
                 <Route path="/first/ui/button" component={Home2} />
                 <Route path="/second" component={Home2} />
+                <Route path="/second/ui/button" component={Home3} />
                 <Route path="/third" component={Home3} />
-                <Redirect to="/first" />
+                <Redirect to="/first/ui/button" />
               </Switch>
             </App>
           }/>
