@@ -5,14 +5,14 @@ import menuList from './config/menuConfig'
 import { NavLink } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import './App.css';
-// import Header from './components/Header'
+import Header from './components/Header'
 
 import { connect } from 'react-redux'
 // import { changeIndex } from './redux/action'
 
 
 const { SubMenu } = Menu;
-const { Sider, Content, Header } = Layout;
+const { Sider, Content } = Layout;
 
 
 class App extends Component {
@@ -20,33 +20,14 @@ class App extends Component {
   state = {
     menuTreeNode: [],
     defaultSelectedKeys: '',
-    selectedKeys: '',
     defaultOpenKeys: ''
   }
 
-  componentWillMount () {
+  componentWillMount () {  
+    // this.getDefaultOpenKeys(pathname, index)
     let pathname = this.props.location.pathname
-    console.log(pathname)
-    let index
-    if (pathname.includes('/first') || pathname === '/') {
-      index = 0
-      this.setState({
-        selectedKeys: '/first/ui/button',
-      })
-    } else if (pathname.includes('/second')) {
-      index = 1
-      this.setState({
-        selectedKeys: '/second/ui/button'
-      })
-    } else if (pathname.includes('/third')) {
-      index = 2
-      this.setState({
-        selectedKeys: '/third/ui/button'
-      })
-    }
-    
-    this.getDefaultOpenKeys(pathname, index)
-    const menuTreeNode = this.renderMenu(menuList[index].menu)
+    console.log(this.props)
+    const menuTreeNode = this.renderMenu(menuList[0].menu)
     if (pathname === '/') {
       this.setState({
         menuTreeNode,
@@ -105,28 +86,10 @@ class App extends Component {
     })
   }
 
-  handleClick = ({item, key, keyPath }) => {
-    let index
-    if (key.includes('/first')) {
-      index = 0
-    } else if (key.includes('/second')) {
-      index = 1
-    } else if (key.includes('/third')) {
-      index = 2
-    }
-    const menuTreeNode = this.renderMenu(menuList[index].menu)
-
-    this.setState({
-      menuTreeNode,
-      defaultSelectedKeys: key
-    })
-    this.getDefaultOpenKeys(key, index)
-  }
-
   render() {
     return (
       <Layout>
-        <Header className="header">
+        {/* <Header className="header">
           <div className="logo" />
           <Menu
             theme="dark"
@@ -145,8 +108,8 @@ class App extends Component {
             })
           }
           </Menu>
-        </Header>
-        {/* <Header /> */}
+        </Header> */}
+        <Header menuList={menuList} />
         <Layout>
           <Sider width={200} style={{ background: '#fff' }}>
             <Menu
